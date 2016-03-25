@@ -1,98 +1,107 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html ng-app="starter">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Connect Lite</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+-->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+<!-- ionic/angularjs js -->
+<script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+<!-- cordova script (this will be a 404 during development) -->
+<script src="cordova.js"></script>
 
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter">
+
+</head>
+<body ng-controller="BusinessProductsController as bpc">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable"  >
-
-        <div class="row">
-          <div class="col col-10"></div>
-          <div class="col col-60">
-           <p class=" " >CONNECT LITE</p>
+    <ion-header-bar class="bar-positive">
+    <div class="row">
+        <div class="col col-10"></div>
+        <div class="col col-60">
+            <p class="" style="font-style: italic; font-weight: bold; font-size: 1.5em; letter-spacing: 2.5px;">CONNECT LITE</p>
         </div>
-          <div class="col col-20">
-          <label>John Baker
-            </label>
-            </div>
-          <div class="col ">
-           <div class="icon-right ion-person icon-large"></div>
-          </label>
-          </div>
-
+        <div class="col col-20">
+            <label>JOHN BAKER</label>
         </div>
-      </ion-header-bar>
-      <ion-content>
+        <div class="col">
+            <div class="icon-right ion-person icon-large"></div>
+        </div>
+    </div>
+    </ion-header-bar>
+
+<ion-content>
+<div class="row responsive-md">
+    <div class="col col-50 col-right">
         <div class="row responsive-md">
-          <div class="col col-50">
-            <div class="row responsive-md">
-              <div class="col">
-                <img src="img/1.jpg">
-              </div>
-              <div class="col">
-                <img src="img/2.jpg">
-              </div>
-              <div class="col">
-                <img src="img/3.jpg">
-              </div>
-              <div class="col">
-                <img src="img/4.jpg">
-              </div>
+            <div class="col col-center">
+                <img class="center" style="transform: scale(2.2);" src="img/jake/svgs/icon_calendar.svg" />
+            </div>
+            <div class="col">
+                <img src="img/ionic.png" style="transform: scale(0.8);" />
+            </div>
+            <div class="col col-center">
+                <img class="center" style="transform: scale(2.5);" src="img/jake/svgs/icon_profile.svg" />
+            </div>
+            <div class="col">
+                <img src="img/ionic.png" style="transform: scale(0.8);" />
+            </div>
+        </div>        
+    </div>
+
+    <div class="col col-50">
+        <div class="row responsive-md">
+            <div class="col">
+                <label class="item item-input">
+                    <!-- <span class="input-label">Account Number</span> -->
+                    <input type="text" placeholder="A/C Number" />
+                </label>
             </div>
 
-          </div>
-          <div class="col col-50">
-            <div class="row responsive-md">
-              <div class="col">Account Number
+            <div class="col">
                 <label class="item item-input">
-                  <input type="text" placeholder="Account Number">
+                    <!-- <span class="input-label">ECI ID</span> -->
+                    <input type="text" placeholder="ECI ID" />
                 </label>
-                  </div>
-
-              <div class="col">ECI ID
-                <label class="item item-input">
-                  <input type="text" placeholder="ECI ID">
-                </label>
-              </div>
-
-              <div class="col">Name
-                <label class="item item-input">
-                  <input type="text" placeholder=" Name">
-                </label>
-              </div>
-
-              <div class="col">&nbsp;
-                <label class="item-input">
-              <button class="button button-medium ion-ios-search search-button">
-                search
-              </button>
-                  </label>
-              </div>
-
             </div>
-          </div>
+
+            <div class="col">
+                <label class="item item-input">
+                    <!-- <span class="input-label">Name</span> -->
+                    <input type="text" placeholder="Full Name" />
+                </label>
+            </div>
         </div>
-      </ion-content>
-    </ion-pane>
-  </body>
+        <div class="row responsive-md">
+            <div class="col">
+                <button class="button button-medium ion-ios-search button button-positive search-button"> Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+</ion-content>
+<ion-footer-bar align-title="left" class="bar-dark">
+  <div class="buttons">
+    <button class="button">Google</button>
+  </div>
+  <h1 class="title">JPMC Internal Application</h1>
+  <div class="buttons" ng-click="doSomething()">
+    <button class="button">Facebook</button>
+  </div>
+</ion-footer-bar>
+</ion-pane>
+
+<!-- your app's js -->
+<script src="js/app.js"></script>
+</body>
 </html>
