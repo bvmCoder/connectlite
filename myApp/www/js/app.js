@@ -22,3 +22,29 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.controller('BusinessProductsController', function BusinessProductsController() {
+  var self = this;
+
+  self.products = [
+  {
+    title: "Mortgage",
+    description: "Home Mortgage which can never paid off!",
+    completed: false
+  },
+   {
+    title: "Loan",
+    description: "Chase Auto Finance Loan!",
+    completed: false
+  },
+  {
+    title: "Debit Card",
+    description: "Bank has assigned me a Debit Card!",
+    completed: false
+  },
+   {
+    title: "Mortgage",
+    description: "Bank has approved my a Credit Card!",
+    completed: false
+  }];
+})
