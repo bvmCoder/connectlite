@@ -18,3 +18,23 @@ img.center {
 	border-bottom: 1px solid #292929;
 	box-shadow: 2px 2px 2px #DB5E00;
 }
+
+.ion-ios-bell:before {
+    padding-left:10px;
+    color:#ffffff;
+}
+.badge.badge-assertive{
+    top: -11px;
+    left: -14px;
+    position: relative;
+}
+.modalhead {
+	position: relative;
+	background-color: #ccc;
+}
+.ion-close-round{
+	font-size:40px;
+	position: absolute;
+	right:3px;
+	top:-1px;
+}
