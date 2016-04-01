@@ -3,105 +3,94 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Connect Lite</title>
+    <title>ConnectLite Application...</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
+	<link href="css/ionicons.min.css" rel="stylesheet">
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
--->
 
 <!-- ionic/angularjs js -->
 <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+<!-- Carousal --> 
+<link href="lib/swiper/dist/css/swiper.min.css" rel="stylesheet"/>    
+    <script src="lib/swiper/dist/js/swiper.js"></script>
+    <script src="lib/angular-swiper/dist/angular-swiper.js"></script>   
+    
+
 <!-- cordova script (this will be a 404 during development) -->
 <script src="cordova.js"></script>
 
-
 </head>
 <body ng-controller="BusinessProductsController as bpc">
-
     <ion-pane>
-    <ion-header-bar class="bar-positive">
-    <div class="row">
-        <div class="col col-10"></div>
-        <div class="col col-60">
-            <p class="" style="font-style: italic; font-weight: bold; font-size: 1.5em; letter-spacing: 2.5px;">CONNECT LITE</p>
-        </div>
-        <div class="col col-20">
-            <label>JOHN BAKER</label>
-        </div>
-        <div class="col">
-            <div class="icon-right ion-person icon-large"></div>
-        </div>
-    </div>
+    <ion-header-bar class="bar bar-header bar-positive">
+		
+			<div class="buttons">
+				<a href="#" ng-click="displaycustomers(); openModal()">
+					<span style="font-size: 250%;" class=" ion-ios-bell" data-pack="ios" data-tags="right">
+					<span class="badge badge-assertive hide">{{customercount}}</span>
+					</span>
+				</a>
+			</div>
+			<h1 class="title titlealign">BOA ConnectLite Application</h1>
+			<div class="buttons">
+				<button class="icon ion-ios-person"> JOHN BAKER</button>&nbsp;<button class=" icon ion-log-out" title="logout"></button>
+			</div>
+		
     </ion-header-bar>
-
 <ion-content>
 <div class="row responsive-md">
-    <div class="col col-50 col-right">
-        <div class="row responsive-md">
-            <div class="col col-center">
-                <img class="center" style="transform: scale(2.2);" src="img/jake/svgs/icon_calendar.svg" />
-            </div>
-            <div class="col">
-                <img src="img/ionic.png" style="transform: scale(0.8);" />
-            </div>
-            <div class="col col-center">
-                <img class="center" style="transform: scale(2.5);" src="img/jake/svgs/icon_profile.svg" />
-            </div>
-            <div class="col">
-                <img src="img/ionic.png" style="transform: scale(0.8);" />
-            </div>
-        </div>        
+
+    <div class="col col-50 col-right"> 
+    <div class="recommendedProducts text-center">Recommended Products</div>
+              <div class="swiper-wrapper-main">
+                     <ks-swiper-container initial-slide="3" speed="2000" loop="true" show-nav-buttons="true" slides-per-view="3" space-between="3" pagination-clickable="false" centeredSlides = "true" override-parameters="{effect: 'coverflow',coverflow: {rotate: 50,stretch: 0,depth: 100,modifier: 1,slideShadows : false}}">
+                     <ks-swiper-slide class="swiper-slide" ng-repeat="s in ['chase4.png','chase6.png','chase5.png','chase4.png','chase3.png','chase6.png','chase3.png'] track by $index">
+                       <img class="center" ng-src="img/jake/appimg/{{s}}">
+                     </ks-swiper-slide>                
+                     </ks-swiper-container>
+              </div> 
     </div>
-
-    <div class="col col-50">
-        <div class="row responsive-md">
-            <div class="col">
-                <label class="item item-input">
-                    <!-- <span class="input-label">Account Number</span> -->
-                    <input type="text" placeholder="A/C Number" />
-                </label>
-            </div>
-
-            <div class="col">
-                <label class="item item-input">
-                    <!-- <span class="input-label">ECI ID</span> -->
-                    <input type="text" placeholder="ECI ID" />
-                </label>
-            </div>
-
-            <div class="col">
-                <label class="item item-input">
-                    <!-- <span class="input-label">Name</span> -->
-                    <input type="text" placeholder="Full Name" />
-                </label>
-            </div>
-        </div>
-        <div class="row responsive-md">
-            <div class="col">
-                <button class="button button-medium ion-ios-search button button-positive search-button"> Search
-                </button>
-            </div>
-        </div>
-    </div>
+    
+    <div class="col col-50 noborder-right col-right">  
+    <div class="searchClientText text-center">Lookup Your Client</div>
+    <form name="searchform" class="searchClientForm">
+    <!-- <div class="req">* Required field</div> -->
+    <div class="item item-input-inset">
+      <label class="item item-input-wrapper">          
+      <input type="text" placeholder="First Name (Required)" ng-model="bpc.user.FirstName" ng-required=true>
+      </label>&nbsp;
+      <label class="item item-input-wrapper">          
+      <input type="text" placeholder="Last Name" ng-model="bpc.user.LastName">
+      </label>
+     
+   </div>
+   <div class="item item-input-inset">
+    <button ui-sref="search" class="button ion-ios-search" ng-click="openModal();displaycustomers();" ng-disabled="searchform.$invalid"> Search</button>
+   </div>     
+        </form>      
+   </div> 
 
 </div>
+<div ui-view>
+<h1 class="welcome-message text-center">Welcome to BOA Connect Lite</h1>
+<h3 class="welcome-message1 text-center">Serve and Engage with your Clients Better</h3>
+</div>
 </ion-content>
-<ion-footer-bar align-title="left" class="bar-dark">
+
+
+<ion-footer-bar align-title="center" class="bar-dark">
   <div class="buttons">
-    <button class="button">Google</button>
   </div>
-  <h1 class="title">JPMC Internal Application</h1>
+  <h1 class="title">Paychex Internal Application v1.0</h1>
   <div class="buttons" ng-click="doSomething()">
-    <button class="button">Facebook</button>
   </div>
 </ion-footer-bar>
 </ion-pane>
-
 <!-- your app's js -->
-<script src="js/app.js"></script>
+<script src="dist/app.js"></script>
+
 </body>
 </html>
