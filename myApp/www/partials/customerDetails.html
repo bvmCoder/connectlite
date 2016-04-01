@@ -1,0 +1,77 @@
+<ul class="list card">
+	<li class="item item-thumbnail-left " >  
+		<img src="./img/jake/appimg/avatar.jpg" />
+		<h2><b>{{getCustomerName(customerDetail)}}</b></h2>
+		<p> {{customerDetail.EnterpriseID}}</p>
+		<p><i class="icon ion-email" style="font-size: 25px;vertical-align: middle"></i> {{customerDetail.Email}}</p>
+	</li>
+	<li class="item item-toggle item-icon-left ">
+		<i class="icon ion-card"></i>
+	<span class="subhead1">SSNTIN</span>
+		<span class="item-note">
+			{{customerDetail.SSNTINMask}}
+			 <label class="toggle toggle-positive">
+			   <input type="checkbox" ng-model='mask' ng-change="toggleChange(customerDetail.SSNTIN)">
+			   <div class="track">
+				 <div class="handle"></div>
+			   </div>
+			 </label>
+		</span>
+	</li>
+	<li class="item item-divider item-icon-left item-icon-right">
+		<i class="icon ion-home"></i> ADDRESS
+		<div class="icon " ng-click="showAddicon = !showAddicon;showAddress=!showAddress;">
+		<button class=" ion-plus-round" ng-show="!showAddicon"  ></button>
+		  <button ng-show="showAddicon" class=" ion-minus-round" ></button>
+		</div>
+	</li>
+	<li class="item" ng-show="showAddress">                    
+		<div class="marLeft">
+			<div><span class="subHead">AddressLine1:</span> {{customerDetail.Address.AddressLine1}}</div>
+			<div ><span class="subHead">City:</span> {{customerDetail.Address.City}}</div>
+			<div ><span class="subHead">State:</span> {{customerDetail.Address.State.Code}}</div>
+			<div ><span class="subHead">PostalArea:</span> {{customerDetail.Address.PostalArea}}</div>
+			<div ><span class="subHead">Country:</span> {{customerDetail.Address.Country}}</div>	
+		</div>
+	</li>
+	<li class="item item-divider">RECENT ACTIVITIES</li>
+   <div class="swiper-wrapper-main">
+    <ks-swiper-container initial-slide="3" speed="2000" loop="true" show-nav-buttons="true" slides-per-view="3" space-between="3" pagination-clickable="false" centeredSlides = "false" override-parameters="{effect: 'coverflow',coverflow: {rotate: 10,stretch: 0,depth: 100,modifier: 1,slideShadows : false}}"  on-ready="onReadySwiper(swiper)">
+            <ks-swiper-slide class="swiper-slide"  ng-repeat="recentActivities in (customerDetail.RecentActivities)">
+            
+            <div class = "activity-container">
+            <div class = "activity-content-wrapper"> 
+              <span class = "activity-content-title">{{recentActivities.taskDescription}}</span> <br><br>
+              <span class = " activity-content-date">Date Of Occurrence : {{recentActivities.Date}}</span><br>
+              <span class="activity-desc-title">{{recentActivities.CustomerNote}}</span>
+              <div ng-if = "recentActivities.Status == 'completed'" >
+                 <span class = "activity-desc"> User requested more information about the Home Mortgage rates </span> 
+              </div>
+              <div ng-if = "recentActivities.Status == 'pending'" >
+                <span class = "activity-desc"> User requested cheque book to be delivered at Home address </span> 
+              </div> 
+              </div>
+
+            <!--  <div ng-switch on="recentActivities.Category">
+                  <div ng-switch-when="note">
+                       <img class="activity-icon" src ="../img/jake/svgs/note_icon.jpg"> 
+                  </div>
+                  <div ng-switch-when="Oppurtunity">
+                       <img class="activity-icon" src ="../img/jake/svgs/opportunity-icon.png">  
+                  </div>
+                  <div ng-switch-when="transaction">
+                      <img class="activity-icon" src ="../img/jake/svgs/transaction-icon.jpg"> 
+                  </div>
+                  <div ng-switch-default>
+                      <img class="activity-icon" src ="../img/jake/svgs/note_icon.jpg"> 
+                  </div>
+              </div> -->
+
+            </div>
+			
+            </ks-swiper-slide>  
+        </ks-swiper-container>
+        </div>
+</ul>
+  
+
