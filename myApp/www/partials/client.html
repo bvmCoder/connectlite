@@ -1,0 +1,27 @@
+<ion-modal-view>
+  <ion-header-bar class="modalHead">
+    <!-- <span class="ion-close-round" ng-click="closeModal()"></span> -->
+    <div class="bar bar-header bar-positive title text-center"><h3 class="text-center">Your Clients</h3></div> 
+  </ion-header-bar>
+  <ion-content>
+  <div ng-show="bpc.bankCustomers.length">
+        <div class="row header" >
+          <div class="col col-25 text-center">Name</div>
+          <div class="col col-55 address text-center">Address</div>
+          <div class="col col-20 text-center">ECI</div>         
+        </div>
+        
+        <div class="row contentrows" ng-repeat="customer in (bpc.bankCustomers)| filter:  {EnterpriseIndNonIndInfo:{EnterpriseIndInfo:{IndName: { LastName: bpc.user.LastName, FirstName: bpc.user.FirstName}}}} | limitTo: numberOfItemsToDisplay track by $index">
+          <div class="col col-25 "> <a ui-sref="customer({id:customer.EnterpriseID})"   style="text-decoration: none;" ng-click="closeModal();" >{{ bpc.getCustomerFullName(customer) }}</a></div>
+          <div class="col col-55 address">{{customer.Address.AddressLine1}}, {{customer.Address.City}}, {{customer.Address.State.Code}}, {{customer.Address.PostalArea}}, {{customer.Address.Country}}</div>
+          <div class="col col-20 text-center">{{ customer.EnterpriseID }}</div>
+        </div>
+<ion-infinite-scroll ng-if="!bpc.completedLoading" on-infinite="addItems()" immediate-check="false" distance="1%"></ion-infinite-scroll>
+<div class='item item-divider text-center itemcompleted' ng-show='bpc.completedLoading'>{{bpc.completedLoadingMsg}}</div>
+</div>
+<div class="row" ng-show="!bpc.bankCustomers.length">
+<div class="col col-30 text-center noClients">No Clients Found</div>
+ </div>
+</ion-content>
+
+</ion-modal-view>
