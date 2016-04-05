@@ -1,43 +1,61 @@
-angular.module('starter').controller('BusinessProductsController',['$scope', '$interval', '$timeout', '$ionicModal', 'userInformationService' ,'$ionicSideMenuDelegate' ,'$ionicPopup', function BusinessProductsController($scope, $interval, $timeout, $ionicModal, userInformationService,$ionicSideMenuDelegate, $ionicPopup) {
+angular.module('starter').controller('BusinessProductsController',['$scope', '$interval', '$timeout', '$ionicModal', '$filter','userInformationService' ,'$ionicSideMenuDelegate' ,'$ionicPopup','$http', function BusinessProductsController($scope, $interval, $timeout, $ionicModal, $filter,userInformationService,$ionicSideMenuDelegate, $ionicPopup,$http) {
   var self = this;
+  self.user={};
+  $scope.selectedCustomer={};
+  $scope.client={};
+  $scope.customercount=0;
 
-
-  self.bankCustomers = [];
   // to unbind infinte scroll;  
   self.completedLoading = false;
-  var recordsLength=0;  
-  $scope.numberOfItemsToDisplay =9;  
-  self.getCustomerData = function getCustomerData() {
-    self.bankCustomers = userInformationService.customers[0].EnterpriseCustomer;
-	recordsLength=self.bankCustomers.length;
-    console.log(self.bankCustomers);
-    //var x=userInformationService.getCustomer(this.user);	
-    return self.bankCustomers;
-  }
-
-  // for adding customers on scroll
-  $scope.addItems = function addItems(isLastSet) {	     
-	  if(isLastSet || $scope.numberOfItemsToDisplay>=recordsLength){		  
-		  $scope.$broadcast('scroll.infiniteScrollComplete');
-		  self.completedLoading=true;
-		  self.completedLoadingMsg="No more clients to show";
-	  } else {		  
-		  $scope.numberOfItemsToDisplay+=$scope.numberOfItemsToDisplay;
-		  if(recordsLength-$scope.numberOfItemsToDisplay<5)		  {
-			   $scope.numberOfItemsToDisplay=recordsLength;
-			   $scope.addItems("true");
-		  }		  
-	  }
-	return self.bankCustomers;	 
-  }  
-
-  self.getCustomerFullName = function getCustomerFullName(cst) {
-    return  (cst.EnterpriseIndNonIndInfo.EnterpriseIndInfo.IndName.FirstName + ' ' +
-      cst.EnterpriseIndNonIndInfo.EnterpriseIndInfo.IndName.LastName);
+  var recordsLength=0,totalPages=0;  
+  $scope.numberOfItemsToDisplay =0; 
+  
+  self.getCustomerData = function getCustomerData() {  
+  	if($scope.client){		
+  		getCustomerService();
+  	}
+  };
+  
+  var getCustomerService = function getCustomerService(){
+		userInformationService.getCustomer($scope.client).then(function(data){			
+			if(data != "failure"){
+				if(!self.bankCustomers){
+					  self.bankCustomers = [];
+				  }	
+				self.bankCustomers=self.bankCustomers.concat(data.customerSearchResponse.customerSearchResult);
+				var pagingResponseDetail=data.customerSearchResponse.pagingResponseDetail;
+				$scope.client.pageStart=pagingResponseDetail.pageStart;
+				if(recordsLength == 0){
+				  recordsLength=pagingResponseDetail.totalAvailable;
+				  //minus 1 as we are already showing one page on page load
+				  totalPages=Math.ceil(pagingResponseDetail.totalAvailable/10)-1;
+				}
+			} else {
+				 self.bankCustomers = [];
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');			
+		});			  
   };
 
-$scope.showPopup = function() {
-      $scope.data = {};
+  // for adding customers on scroll
+  $scope.addItems = function addItems() {
+	  if($scope.client.pageStart==recordsLength){
+		  self.completedLoading=true;
+		  self.completedLoadingMsg="No more clients to show";
+	  } else {	  		  		  
+		  getCustomerService();		  
+	  }	 	  
+  };
+
+  self.getCustomerFullName = function getCustomerFullName(cst) {	
+    return  (cst.firstName + ' ' +cst.lastName);
+  };
+  self.getCustomerAddress = function getCustomerAddress(addr) {	 
+    return  ((addr.addressLine1?addr.addressLine1:"")+''+(addr.city?addr.city+', ' :"")+''+(addr.state? addr.state.code+', ' :"")+''+(addr.postalArea? addr.postalArea+', ':"")+''+(addr.country? addr.country.value :""));
+  };    
+
+$scope.showPopup = function showPopup() {
+      $scope.data = {}
     
       // Custom popup
       var myPopup = $ionicPopup.show({
@@ -68,11 +86,13 @@ $scope.showPopup = function() {
       });    
    };
 
-  $scope.customercount=0;
 
-  $scope.displaycustomers = function displaycustomers() {
+  $scope.displayCustomers = function displayCustomers() {
+	self.bankCustomers =undefined;
+	$scope.client.firstName=$filter('uppercase')(self.user.firstName);
+	$scope.client.lastName=$filter('uppercase')(self.user.lastName);
+	$scope.client.pageStart=0;
     $scope.customercount=0;
-
     $ionicModal.fromTemplateUrl('partials/client.html', {
       scope: $scope,
       animation: 'slide-in-up',
@@ -81,29 +101,46 @@ $scope.showPopup = function() {
       $scope.modal = modal;
       $scope.modal.show();
     });
+  }
+  $scope.displayCustomersBell = function displayCustomersBell() {
+   $scope.client.firstName=$filter('uppercase')('JOHN');
+   $scope.client.lastName=$filter('uppercase')('SMITH');
+   $scope.customercount=0;
+
+   $ionicModal.fromTemplateUrl('partials/client.html', {
+    scope: $scope,
+    animation: 'slide-in-up',
+    hardwareBackButtonClose: true
+  }).then(function(modal) {
+    $scope.modal = modal;
+    $scope.modal.show();
+  });
+   
+  };
+
+
     $scope.openModal = function openModal() {
       self.getCustomerData();
-
     };
-    $scope.closeModal = function closeModal() {
-      $scope.modal.hide();
+    $scope.closeModal = function closeModal(customer) {
+    	if(customer){
+    		$scope.selectedCustomer=customer;	
+      }
+    	$scope.modal.hide();
     };
-    
-  }
 
   $interval(function() {
     angular.element(document.querySelector('.badge-assertive')).removeClass('hide');
-    $scope.customercount = parseInt($scope.customercount) + 1;
+    if($scope.customercount<8){
+    	 $scope.customercount = parseInt($scope.customercount) + 1;
+    }
+   
   }, 15000);
  
-
-
- self.getCustomerData();
-$scope.swiper = {}; //initialize
-$scope.onReadySwiper = function (swiper)
-{
-  $scope.swiper = swiper; //update when the swiper is ready
-};
+  $scope.swiper = {}; //initialize
+  $scope.onReadySwiper = function onReadySwiper(swiper) {
+    $scope.swiper = swiper; //update when the swiper is ready
+  };
 
 
 }]);
