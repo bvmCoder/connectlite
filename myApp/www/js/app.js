@@ -6,35 +6,41 @@
 angular.module('starter', ['ionic','ui.router','ksSwiper'])
 
 .run(['$ionicPlatform',function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
+	$ionicPlatform.ready(function() {
+		if(window.cordova && window.cordova.plugins.Keyboard) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
     // Don't remove this line unless you know what you are doing. It stops the viewport
     // from snapping when text inputs are focused. Ionic handles this internally for
     // a much nicer keyboard experience.
     cordova.plugins.Keyboard.disableScroll(true);
-  }
-  if(window.StatusBar) {
-    StatusBar.styleDefault();
-  }
+}
+if(window.StatusBar) {
+	StatusBar.styleDefault();
+}
 });
 }])
 
 .config(['$stateProvider','$urlRouterProvider','$locationProvider',function($stateProvider,$urlRouterProvider,$locationProvider){
-	$stateProvider.state('customer',
-   { url:'/customer/{id:[0-9]{1,8}}', 
-   controller:'CustomerDetailsController', 
-   templateUrl:'partials/customerDetails.html' 
- })
- .state('search',
-		 {
-	 url:'/'
-	 //controller:'BusinessProductsController',
-	 //templateUrl:'/partials/client.html' 
-		 })
- $urlRouterProvider.otherwise('search'); 
+	$stateProvider.state('customer', {  
+		url:'/customer/{id:[0-9]{1,8}}', 
+		controller:'CustomerDetailsController as cdc', 
+		templateUrl:'partials/customerDetails.html' 
+	})
+	$stateProvider.state('bellCustomer', {  
+		url:'/bellCustomer/{id:[0-9]{1,8}}', 
+		controller: 'BusinessProductsController as bpc', 
+		templateUrl:'partials/individualCustomerDetails.html' 
+	})
+	.state('searchClient',{
+		url:'/searchClient'
+	})
+	.state('otherwise', {
+		url: '/home',
+		controller: 'BusinessProductsController as bpc'
+	})
+	$urlRouterProvider.otherwise('/'); 
 	
 }])
