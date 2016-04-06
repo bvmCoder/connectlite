@@ -9,6 +9,7 @@
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
 
 <!-- ionic/angularjs js -->
 <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -28,7 +29,7 @@
     <ion-header-bar class="bar bar-header bar-positive">
 		
 			<div class="buttons">
-				<a href="#" data-ng-click="displayCustomersBell(); openModal()">
+				<a href="#" data-ng-click="bpc.displayCustomersBell(); bpc.openModal();">
 					<span style="font-size: 250%;" class=" ion-ios-bell" data-pack="ios" data-tags="right">
 					<span class="badge badge-assertive hide">{{customercount}}</span>
 					</span>
