@@ -16,7 +16,7 @@
         </div>
 
         <div class="row contentrows" data-ng-repeat="customer in (bpc.bankCustomers) track by $index">
-          <div class="col col-25 "> <a data-ui-sref="customer({id:customer.enterpriseCustomerProspect.enterpriseCustomer.enterpriseID.value})"   style="text-decoration: none;" ng-click="closeModal(customer);" >{{ bpc.getCustomerFullName(customer.enterpriseCustomerProspect.enterpriseCustomer.enterpriseIndNonIndInfo.enterpriseIndInfo.indName) }}</a></div>
+          <div class="col col-25 "> <a data-ui-sref="customer({id:customer.enterpriseCustomerProspect.enterpriseCustomer.enterpriseID.value})" style="text-decoration: none;" ng-click="closeModal(customer);" >{{ bpc.getCustomerFullName(customer.enterpriseCustomerProspect.enterpriseCustomer.enterpriseIndNonIndInfo.enterpriseIndInfo.indName) }}</a></div>
           <div class="col col-55 address">{{ bpc.getCustomerAddress(customer.enterpriseCustomerProspect.enterpriseCustomer.address) }}</div>
 
           <div class="col col-20 text-center">{{ customer.enterpriseCustomerProspect.enterpriseCustomer.enterpriseID.value }}</div>
@@ -31,3 +31,4 @@
 </ion-content>
 
 </ion-modal-view>
+
