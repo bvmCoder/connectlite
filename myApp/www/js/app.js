@@ -44,3 +44,4 @@ if(window.StatusBar) {
 	$urlRouterProvider.otherwise('/'); 
 	
 }])
+
