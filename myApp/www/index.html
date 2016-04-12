@@ -9,7 +9,7 @@
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script> -->
 
 <!-- ionic/angularjs js -->
 <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -28,34 +28,34 @@
     <ion-pane>
     <ion-header-bar class="bar bar-header bar-positive">
 		
-			<div class="buttons">
+			<div class="buttons alertbtn">
 				<a href="#" data-ng-click="bpc.displayCustomersBell(); bpc.openModal();">
-					<span style="font-size: 250%;" class=" ion-ios-bell" data-pack="ios" data-tags="right">
+					<span style="font-size: 250%;" class="ion-ios-bell" data-pack="ios" data-tags="right">
 					<span class="badge badge-assertive hide">{{customercount}}</span>
 					</span>
 				</a>
 			</div>
-			<h1 class="title titlealign">ConnectLite Application</h1>
+			<h1 class="title titlealign">ClientLite Application</h1>
 			<div class="buttons">
 				<button class="icon ion-ios-person">JOHN BAKER</button>&nbsp;<button class=" icon ion-log-out" title="logout"></button>
 			</div>
 		
     </ion-header-bar>
 <ion-content>
-<div class="row responsive-md">
+<div class="row responsive-md indexheader">
 
-    <div class="col col-50 col-right"> 
+    <div class="col col-50 col-right" ng-if="bpc.bankCustomers"> 
     <div class="recommendedProducts text-center">Recommended Products</div>
-              <div class="swiper-wrapper-main">
-                     <ks-swiper-container initial-slide="3" speed="2000" loop="true" show-nav-buttons="true" slides-per-view="3" space-between="3" pagination-clickable="false" centeredSlides = "true" override-parameters="{effect: 'coverflow',coverflow: {rotate: 50,stretch: 0,depth: 100,modifier: 1,slideShadows : false}}">
-                     <ks-swiper-slide class="swiper-slide" ng-repeat="s in ['chase4.png','chase6.png','chase5.png','chase4.png','chase3.png','chase6.png','chase3.png'] track by $index">
+              <div class="swiper-wrapper-main productcontainer">
+                     <ks-swiper-container initial-slide="3" speed="2000" loop="true" show-nav-buttons="true" slides-per-view="3" space-between="20" pagination-clickable="false" centeredSlides = "true" override-parameters="{effect: 'coverflow',coverflow: {rotate: 25,stretch: 0,depth: 100,modifier: 1,slideShadows : false}}">
+                     <ks-swiper-slide class="swiper-slide" ng-repeat="s in ['golden.png','sales.png','service.png'] track by $index">
                        <img class="center" data-ng-src="img/jake/appimg/{{s}}">
                      </ks-swiper-slide>                
                      </ks-swiper-container>
               </div> 
     </div>
-    
-    <div class="col col-50 noborder-right col-right">  
+    <!--  ng-class="{!bpc.bankCustomers: }" -->
+    <div class="col col-50 noborder-right" ng-class="{'searchcenter':!bpc.bankCustomers}" >  
     <div class="searchClientText text-center">Lookup Your Client</div>
     <form name="searchForm" class="searchClientForm">
 
@@ -77,7 +77,7 @@
 
 </div>
 <div data-ui-view>
-<h1 class="welcome-message text-center">Welcome to Connect Lite</h1>
+<h1 class="welcome-message text-center">Welcome to Client Application</h1>
 <h3 class="welcome-message1 text-center">Serve and engage with your clients better</h3>
 </div>
 </ion-content>
@@ -85,9 +85,6 @@
 
 <ion-footer-bar align-title="center" class="bar-dark">
   <div class="buttons">
-  </div>
-  <h1 class="title">JPMC Internal Application v1.1</h1>
-  <div class="buttons" data-ng-click="doSomething()">
   </div>
 </ion-footer-bar>
 </ion-pane>
